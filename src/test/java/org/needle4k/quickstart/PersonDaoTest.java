@@ -19,8 +19,10 @@ import org.needle4k.quickstart.user.Address;
 import org.needle4k.quickstart.user.Person;
 import org.needle4k.quickstart.user.User;
 import org.needle4k.quickstart.user.dao.PersonDao;
+import org.needle4k.reflection.ReflectionUtil;
 
 import jakarta.inject.Inject;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 
 @ExtendWith(JPANeedleExtension.class)
@@ -30,7 +32,11 @@ public class PersonDaoTest
   private TransactionHelper transactionHelper;
 
   @InjectIntoMany
-  private User user = Mockito.mock(User.class);
+  @Mock
+  private User user;
+
+  @Inject
+  private ReflectionUtil reflectionUtil;
 
   @ObjectUnderTest
   private PersonDao objectUnderTest;
@@ -38,8 +44,11 @@ public class PersonDaoTest
   @Test
   public void testFindByStreet() throws Exception
   {
+    final EntityManager entityManager = (EntityManager) reflectionUtil.getFieldValue(objectUnderTest, "entityManager");
+
     assertThat(Mockito.mockingDetails(user).isMock()).isTrue();
     assertThat(Mockito.mockingDetails(objectUnderTest).isMock()).isFalse();
+    assertThat(Mockito.mockingDetails(entityManager).isMock()).isFalse();
 
     final Person person1 = transactionHelper.saveObject(new Person("Heinz", new Address("Bülowstr. 66", "10783 Berlin")));
 

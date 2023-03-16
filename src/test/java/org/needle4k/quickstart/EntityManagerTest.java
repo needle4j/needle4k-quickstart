@@ -14,7 +14,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
 @ExtendWith(JPANeedleExtension.class)
-public class JPABasicTest
+public class EntityManagerTest
 {
   @Inject
   private TransactionHelper transactionHelper;
