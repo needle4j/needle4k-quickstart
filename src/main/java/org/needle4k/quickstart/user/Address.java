@@ -7,10 +7,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = Address.TABLE_NAME, uniqueConstraints = { @UniqueConstraint(columnNames = { "STRASSE" }) })
+@Table(name = Address.TABLE_NAME)
 public class Address
 {
   public static final String TABLE_NAME = "NEEDLE_TEST_ADDRESS";
@@ -22,7 +21,7 @@ public class Address
   @Column(name = "STRASSE", nullable = false)
   private String street = "";
 
-  @Column(name = "PLZ", nullable = false)
+  @Column(name = "PLZ", nullable = false, unique = true)
   private String zip = "";
 
   @ManyToOne

@@ -11,13 +11,16 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = Person.TABLE_NAME)
+@NamedQuery(name = Person.FIND_BY_STREET, query = "SELECT p FROM Person p INNER JOIN p.addresses a WHERE a.street = :street")
 public class Person {
   public static final String TABLE_NAME = "TEST_PERSON";
+  public static final String FIND_BY_STREET = "FIND_BY_STREET";
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
