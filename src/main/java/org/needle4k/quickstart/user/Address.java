@@ -1,5 +1,6 @@
 package org.needle4k.quickstart.user;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,7 +10,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = Address.TABLE_NAME, uniqueConstraints = { @UniqueConstraint(columnNames = { "zip" }) })
+@Table(name = Address.TABLE_NAME, uniqueConstraints = { @UniqueConstraint(columnNames = { "STRASSE" }) })
 public class Address
 {
   public static final String TABLE_NAME = "NEEDLE_TEST_ADDRESS";
@@ -18,12 +19,28 @@ public class Address
   @GeneratedValue(strategy = GenerationType.AUTO)
   private long id;
 
+  @Column(name = "STRASSE", nullable = false)
+  private String street = "";
+
+  @Column(name = "PLZ", nullable = false)
+  private String zip = "";
+
   @ManyToOne
   private Person person;
 
-  private String street;
+  // JPA
+  protected Address()
+  {
+  }
 
-  private String zip;
+  public Address(final String street, final String zip)
+  {
+    assert street != null : "assert street != null";
+    assert zip != null : "assert zip != null";
+
+    this.street = street;
+    this.zip = zip;
+  }
 
   public long getId()
   {
