@@ -18,12 +18,15 @@ import jakarta.ejb.EJBAccessException;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 
+/**
+ * Example for custom injection provider for "qualified" CDI component injection
+ */
 public class QualifierTest
 {
   private static final User USER = new User("heinz");
 
   @RegisterExtension
-  static NeedleExtension needleExtension = new NeedleExtension(providerForQualifiedInstance(CurrentUser.class, USER));
+  private static final NeedleExtension needleExtension = new NeedleExtension(providerForQualifiedInstance(CurrentUser.class, USER));
 
   @Inject
   private User someUser;

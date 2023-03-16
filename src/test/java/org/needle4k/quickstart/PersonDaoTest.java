@@ -3,6 +3,7 @@ package org.needle4k.quickstart;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mockingDetails;
 import static org.mockito.Mockito.when;
 import static org.needle4k.quickstart.user.Person.FIND_BY_STREET;
 
@@ -25,6 +26,11 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceException;
 
+/**
+ * Shows how to create mocks as well as real instance and use provided internal utilities.
+ *
+ * Example for testing DAOs.
+ */
 @ExtendWith(JPANeedleExtension.class)
 public class PersonDaoTest
 {
@@ -42,18 +48,24 @@ public class PersonDaoTest
   private PersonDao objectUnderTest;
 
   @Test
-  public void testFindByStreet() throws Exception
+  public void testMocking()
   {
     final EntityManager entityManager = (EntityManager) reflectionUtil.getFieldValue(objectUnderTest, "entityManager");
 
-    assertThat(Mockito.mockingDetails(user).isMock()).isTrue();
-    assertThat(Mockito.mockingDetails(objectUnderTest).isMock()).isFalse();
-    assertThat(Mockito.mockingDetails(entityManager).isMock()).isFalse();
+    assertThat(mockingDetails(user).isMock()).isTrue();
+    assertThat(mockingDetails(objectUnderTest).isMock()).isFalse();
+    assertThat(mockingDetails(entityManager).isMock()).isFalse();
+  }
 
+  @Test
+  public void testFindByStreet() throws Exception
+  {
     final Person person1 = transactionHelper.saveObject(new Person("Heinz", new Address("Bülowstr. 66", "10783 Berlin")));
 
     assertThatThrownBy(() -> transactionHelper.saveObject(new Person("Markus", new Address("", "10783 Berlin"))))
-        .isInstanceOf(PersistenceException.class);
+        .as("Constraint violation, because zip column is unique").isInstanceOf(PersistenceException.class)
+        .hasCauseInstanceOf(ConstraintViolationException.class);
+
     final Person person2 = transactionHelper.saveObject(new Person("Markus", new Address("Bülowstr. 66", "14163 Berlin")));
     final Person person3 = transactionHelper.saveObject(new Person("René", new Address("Kurfürstendamm 66", "10707 Berlin")));
 

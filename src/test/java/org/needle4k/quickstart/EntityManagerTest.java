@@ -13,6 +13,9 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+/**
+ * Test basic JPA functionality
+ */
 @ExtendWith(JPANeedleExtension.class)
 public class EntityManagerTest
 {
