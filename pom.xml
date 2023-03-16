@@ -78,10 +78,9 @@
 
         <!-- Testing dependencies -->
 
-
         <dependency>
             <groupId>org.needle4k</groupId>
-            <artifactId>needle4k</artifactId>
+            <artifactId>needle4k-jakarta</artifactId>
             <version>${needle4k.version}</version>
             <scope>test</scope>
         </dependency>

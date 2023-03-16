@@ -3,6 +3,7 @@ package org.needle4k.quickstart.user;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -56,5 +57,22 @@ public class Person {
   public List<Address> getAddresses()
   {
     return new ArrayList<>(addresses);
+  }
+
+  @Override
+  public boolean equals(final Object o)
+  {
+    if (this == o)
+    {return true;}
+    if (o == null || getClass() != o.getClass())
+    {return false;}
+    final Person person = (Person) o;
+    return getId() == person.getId() && getName().equals(person.getName());
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash(getId(), getName());
   }
 }
