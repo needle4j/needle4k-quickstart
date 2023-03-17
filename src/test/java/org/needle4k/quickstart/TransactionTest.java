@@ -30,7 +30,7 @@ public class TransactionTest
   private JPAInjectorConfiguration configuration;
 
   @Test
-  public void withoutTransactionsTwoEntityManagersDontSeeEachOther() throws Exception
+  public void withoutTransactionsTwoEntityManagersDontSeeEachOther()
   {
     final EntityManager entityManager1 = transactionHelper1.getEntityManager();
     final EntityManager entityManager2 = configuration.getEntityManagerFactory().createEntityManager();
