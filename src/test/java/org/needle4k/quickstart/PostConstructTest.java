@@ -33,8 +33,7 @@ public class PostConstructTest
   private static final NeedleExtension needleExtension = new NeedleExtension()
   {
     {
-      final AnnotationRegistry registry = getNeedleInjector().getConfiguration().getNeedleConfiguration()
-          .getPostconstructAnnotationRegistry();
+      final AnnotationRegistry registry = getNeedleConfiguration().getPostconstructAnnotationRegistry();
       registry.addAnnotation(CustomInjectionAnnotation2.class);
     }
   };
