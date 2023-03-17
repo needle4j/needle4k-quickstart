@@ -21,11 +21,10 @@ import org.needle4k.quickstart.user.SystemType;
 import org.needle4k.quickstart.user.User;
 import org.needle4k.quickstart.user.dao.PersonDao;
 import org.needle4k.quickstart.user.dao.PersonService;
-import org.needle4k.reflection.ReflectionUtil;
+import org.needle4k.reflection.ReflectionHelper;
 
 import jakarta.ejb.EJBAccessException;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
 
 /**
  * Shows how to create mocks as well as real instance and use provided internal utilities.
@@ -43,7 +42,7 @@ public class PersonServiceTest
   private User user;
 
   @Inject
-  private ReflectionUtil reflectionUtil;
+  private ReflectionHelper reflectionHelper;
 
   // Normally you would just use @InjectIntoMany, since we want the same instance everywhere. Usually...
   @InjectInto(targetComponentId = "service")
@@ -58,8 +57,8 @@ public class PersonServiceTest
   @Test
   public void testMocking()
   {
-    final SystemType systemType = (SystemType) reflectionUtil.getFieldValue(objectUnderTest, "systemType");
-    final PersonDao dao = (PersonDao) reflectionUtil.getFieldValue(objectUnderTest, "personDao");
+    final SystemType systemType = (SystemType) reflectionHelper.getFieldValue(objectUnderTest, "systemType");
+    final PersonDao dao = (PersonDao) reflectionHelper.getFieldValue(objectUnderTest, "personDao");
 
     assertThat(mockingDetails(objectUnderTest).isMock()).isFalse();
     assertThat(mockingDetails(dao).isMock()).isTrue();
