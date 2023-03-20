@@ -13,7 +13,7 @@ import org.needle4k.junit5.JPANeedleExtension;
 import org.needle4k.quickstart.user.Address;
 import org.needle4k.quickstart.user.Person;
 import org.needle4k.quickstart.user.dao.PersonDao;
-import org.needle4k.reflection.ReflectionHelper;
+import org.needle4k.reflection.ReflectionUtil;
 
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -36,7 +36,7 @@ public class PersonDaoTest
   @Test
   public void testMocking()
   {
-    final EntityManager entityManager = (EntityManager) ReflectionHelper.getFieldValue(objectUnderTest, "entityManager");
+    final EntityManager entityManager = (EntityManager) ReflectionUtil.getFieldValue(objectUnderTest, "entityManager");
 
     assertThat(mockingDetails(objectUnderTest).isMock()).isFalse();
     assertThat(mockingDetails(entityManager).isMock()).isFalse();

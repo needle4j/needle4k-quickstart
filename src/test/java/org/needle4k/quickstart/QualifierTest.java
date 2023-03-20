@@ -10,7 +10,7 @@ import org.needle4k.junit5.NeedleExtension;
 import org.needle4k.quickstart.annotations.CurrentUser;
 import org.needle4k.quickstart.user.User;
 import org.needle4k.quickstart.user.dao.PersonService;
-import org.needle4k.reflection.ReflectionHelper;
+import org.needle4k.reflection.ReflectionUtil;
 
 import jakarta.inject.Inject;
 
@@ -34,7 +34,7 @@ public class QualifierTest
   @Test
   public void testQualifier()
   {
-    final User currentUser = (User) ReflectionHelper.getFieldValue(objectUnderTest, "currentUser");
+    final User currentUser = (User) ReflectionUtil.getFieldValue(objectUnderTest, "currentUser");
 
     assertThat(someUser).isNotSameAs(currentUser);
     assertThat(currentUser).isSameAs(USER);

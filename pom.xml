@@ -26,7 +26,7 @@
 
         <slf4j.version>2.0.6</slf4j.version>
 
-        <needle4k.version>4.0.1-SNAPSHOT</needle4k.version>
+        <needle4k.version>4.0.1</needle4k.version>
         <hibernate.version>6.1.7.Final</hibernate.version>
 
         <mockito.version>5.2.0</mockito.version>
