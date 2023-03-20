@@ -28,16 +28,13 @@ public class QualifierTest
   @Inject
   private User someUser;
 
-  @Inject
-  private ReflectionHelper reflectionHelper;
-
   @ObjectUnderTest
   private PersonService objectUnderTest;
 
   @Test
   public void testQualifier()
   {
-    final User currentUser = (User) reflectionHelper.getFieldValue(objectUnderTest, "currentUser");
+    final User currentUser = (User) ReflectionHelper.getFieldValue(objectUnderTest, "currentUser");
 
     assertThat(someUser).isNotSameAs(currentUser);
     assertThat(currentUser).isSameAs(USER);

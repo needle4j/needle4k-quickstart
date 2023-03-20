@@ -26,7 +26,7 @@ public class EntityManagerTest
   private EntityManager entityManager;
 
   @Test
-  public void testFindByName() throws Exception
+  public void testFindByName()
   {
     final Person person = transactionHelper.saveObject(new Person("demo", new Address("Bülowstr. 66", "10783 Berlin")));
     final Person personFromDB = (Person) entityManager

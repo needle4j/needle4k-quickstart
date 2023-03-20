@@ -33,32 +33,37 @@ public class TransactionTest
   public void withoutTransactionsTwoEntityManagersDontSeeEachOther()
   {
     final EntityManager entityManager1 = transactionHelper1.getEntityManager();
-    final EntityManager entityManager2 = configuration.getEntityManagerFactory().createEntityManager();
 
-    final Person person = new Person("demo", new Address("Bülowstr. 66", "10783 Berlin"));
-    entityManager1.persist(person);
+    try (EntityManager entityManager2 = configuration.getEntityManagerFactory().createEntityManager())
+    {
 
-    final Person personFromDB = entityManager2.find(Person.class, person.getId());
+      final Person person = new Person("demo", new Address("Bülowstr. 66", "10783 Berlin"));
+      entityManager1.persist(person);
 
-    assertThat(personFromDB).isNull();
+      final Person personFromDB = entityManager2.find(Person.class, person.getId());
+      assertThat(personFromDB).isNull();
+    }
+
   }
 
   @Test
-  public void withTransactionsEverythingIsFine() throws Exception
+  public void withTransactionsEverythingIsFine()
   {
-    final EntityManager entityManager2 = configuration.getEntityManagerFactory().createEntityManager();
-    TransactionHelper transactionHelper2 = new TransactionHelper(entityManager2);
+    try (EntityManager entityManager2 = configuration.getEntityManagerFactory().createEntityManager())
+    {
+      final TransactionHelper transactionHelper2 = new TransactionHelper(entityManager2);
 
-    final Person person = transactionHelper1.saveObject(new Person("demo", new Address("Bülowstr. 66", "10783 Berlin")));
-    final Person personFromDB = transactionHelper2.loadObject(Person.class, person.getId());
+      final Person person = transactionHelper1.saveObject(new Person("demo", new Address("Bülowstr. 66", "10783 Berlin")));
+      final Person personFromDB = transactionHelper2.loadObject(Person.class, person.getId());
 
-    assertThat(personFromDB).isEqualTo(person);
+      assertThat(personFromDB).isEqualTo(person);
 
-    assertThatThrownBy(personFromDB::getAddresses).as("Out of transaction scope, cannot load lazily")
-        .isInstanceOf(LazyInitializationException.class);
-    final List<Address> addresses = transactionHelper2
-        .execute(entityManager -> entityManager.find(Person.class, person.getId()).getAddresses());
+      assertThatThrownBy(personFromDB::getAddresses).as("Out of transaction scope, cannot load lazily")
+          .isInstanceOf(LazyInitializationException.class);
+      final List<Address> addresses = transactionHelper2
+          .execute(entityManager -> entityManager.find(Person.class, person.getId()).getAddresses());
 
-    assertThat(addresses).as("When performed within transaction, lazy loading is OK").hasSize(1);
+      assertThat(addresses).as("When performed within transaction, lazy loading is OK").hasSize(1);
+    }
   }
 }

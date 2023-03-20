@@ -30,23 +30,20 @@ public class PersonDaoTest
   @Inject
   private TransactionHelper transactionHelper;
 
-  @Inject
-  private ReflectionHelper reflectionHelper;
-
   @ObjectUnderTest
   private PersonDao objectUnderTest;
 
   @Test
   public void testMocking()
   {
-    final EntityManager entityManager = (EntityManager) reflectionHelper.getFieldValue(objectUnderTest, "entityManager");
+    final EntityManager entityManager = (EntityManager) ReflectionHelper.getFieldValue(objectUnderTest, "entityManager");
 
     assertThat(mockingDetails(objectUnderTest).isMock()).isFalse();
     assertThat(mockingDetails(entityManager).isMock()).isFalse();
   }
 
   @Test
-  public void testFindByStreet() throws Exception
+  public void testFindByStreet()
   {
     final Person person1 = transactionHelper.saveObject(new Person("Heinz", new Address("Bülowstr. 66", "10783 Berlin")));
     final Person person2 = transactionHelper.saveObject(new Person("Markus", new Address("Bülowstr. 66", "14163 Berlin")));
@@ -58,7 +55,7 @@ public class PersonDaoTest
   }
 
   @Test
-  public void testConstraint() throws Exception
+  public void testConstraint()
   {
     transactionHelper.saveObject(new Person("Heinz", new Address("Bülowstr. 66", "10783 Berlin")));
 

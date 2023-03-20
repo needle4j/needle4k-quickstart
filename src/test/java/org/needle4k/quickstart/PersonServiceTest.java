@@ -41,9 +41,6 @@ public class PersonServiceTest
   @Mock
   private User user;
 
-  @Inject
-  private ReflectionHelper reflectionHelper;
-
   // Normally you would just use @InjectIntoMany, since we want the same instance everywhere. Usually...
   @InjectInto(targetComponentId = "service")
   private final PersonDao dao = Mockito.mock(PersonDao.class);
@@ -57,8 +54,8 @@ public class PersonServiceTest
   @Test
   public void testMocking()
   {
-    final SystemType systemType = (SystemType) reflectionHelper.getFieldValue(objectUnderTest, "systemType");
-    final PersonDao dao = (PersonDao) reflectionHelper.getFieldValue(objectUnderTest, "personDao");
+    final SystemType systemType = (SystemType) ReflectionHelper.getFieldValue(objectUnderTest, "systemType");
+    final PersonDao dao = (PersonDao) ReflectionHelper.getFieldValue(objectUnderTest, "personDao");
 
     assertThat(mockingDetails(objectUnderTest).isMock()).isFalse();
     assertThat(mockingDetails(dao).isMock()).isTrue();
