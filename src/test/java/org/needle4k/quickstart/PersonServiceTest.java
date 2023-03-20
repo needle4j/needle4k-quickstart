@@ -21,7 +21,7 @@ import org.needle4k.quickstart.user.SystemType;
 import org.needle4k.quickstart.user.User;
 import org.needle4k.quickstart.user.dao.PersonDao;
 import org.needle4k.quickstart.user.dao.PersonService;
-import org.needle4k.reflection.ReflectionHelper;
+import org.needle4k.reflection.ReflectionUtil;
 
 import jakarta.ejb.EJBAccessException;
 import jakarta.inject.Inject;
@@ -54,8 +54,8 @@ public class PersonServiceTest
   @Test
   public void testMocking()
   {
-    final SystemType systemType = (SystemType) ReflectionHelper.getFieldValue(objectUnderTest, "systemType");
-    final PersonDao dao = (PersonDao) ReflectionHelper.getFieldValue(objectUnderTest, "personDao");
+    final SystemType systemType = (SystemType) ReflectionUtil.getFieldValue(objectUnderTest, "systemType");
+    final PersonDao dao = (PersonDao) ReflectionUtil.getFieldValue(objectUnderTest, "personDao");
 
     assertThat(mockingDetails(objectUnderTest).isMock()).isFalse();
     assertThat(mockingDetails(dao).isMock()).isTrue();
