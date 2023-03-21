@@ -1,4 +1,4 @@
-package org.needle4k.quickstart;
+package org.needle4k.quickstart.jpa;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -32,6 +32,7 @@ import jakarta.inject.Inject;
  * Example for testing DAOs.
  */
 @ExtendWith(JPANeedleExtension.class)
+@SuppressWarnings("CdiInjectionPointsInspection")
 public class PersonServiceTest
 {
   @Inject

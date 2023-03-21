@@ -1,7 +1,9 @@
-package org.needle4k.quickstart;
+package org.needle4k.quickstart.jpa;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.hibernate.Session;
+import org.hsqldb.jdbc.JDBCConnection;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.needle4k.db.TransactionHelper;
@@ -16,6 +18,7 @@ import jakarta.persistence.PersistenceContext;
 /**
  * Test basic JPA functionality
  */
+@SuppressWarnings("CdiInjectionPointsInspection")
 @ExtendWith(JPANeedleExtension.class)
 public class EntityManagerTest
 {
@@ -35,5 +38,8 @@ public class EntityManagerTest
 
     assertThat(personFromDB).isEqualTo(person);
     assertThat(personFromDB.getAddresses()).hasSize(1);
+
+    final Session session = entityManager.unwrap(Session.class);
+    session.doWork(connection -> assertThat(connection.getClass()).isEqualTo(JDBCConnection.class));
   }
 }

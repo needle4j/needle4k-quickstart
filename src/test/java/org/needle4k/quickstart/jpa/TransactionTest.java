@@ -1,4 +1,4 @@
-package org.needle4k.quickstart;
+package org.needle4k.quickstart.jpa;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -20,6 +20,7 @@ import jakarta.persistence.EntityManager;
 /**
  * Test basic JPA functionality
  */
+@SuppressWarnings("CdiInjectionPointsInspection")
 @ExtendWith(JPANeedleExtension.class)
 public class TransactionTest
 {
