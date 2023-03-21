@@ -24,6 +24,7 @@ public class CustomInjectionProviderTest2
   private static final NeedleExtension needleExtension = new NeedleExtension()
   {
     // CustomInjectionAnnotation1 is added by needle.properties already
+    protected void configure()
     {
       getNeedleInjector().getConfiguration().addGlobalInjectionAnnotationClass(CustomInjectionAnnotation2.class);
     }

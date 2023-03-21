@@ -23,6 +23,7 @@ public class EasyMockProviderTest
   @RegisterExtension
   private static final NeedleExtension needleExtension = new NeedleExtension()
   {
+    protected void configure()
     {
       final Map<String, String> properties = getNeedleConfiguration().getConfigurationProperties();
       properties.put(MOCK_PROVIDER_KEY, EasyMockProvider.class.getName());
