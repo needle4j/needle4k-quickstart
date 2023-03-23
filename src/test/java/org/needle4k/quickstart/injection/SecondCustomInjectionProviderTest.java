@@ -15,7 +15,7 @@ import org.needle4k.quickstart.annotations.CustomInjectionAnnotation2;
  * in general.
  */
 @ExtendWith(NeedleExtension.class)
-public class CustomInjectionProviderTest2
+public class SecondCustomInjectionProviderTest
 {
   @ObjectUnderTest
   private CustomInjectionTestComponent component;
@@ -26,7 +26,7 @@ public class CustomInjectionProviderTest2
     // CustomInjectionAnnotation1 is added by needle.properties already
     protected void configure()
     {
-      getNeedleInjector().getConfiguration().addGlobalInjectionAnnotationClass(CustomInjectionAnnotation2.class);
+      getNeedleInjector().getConfiguration().addCustomInjectionAnnotationClass(CustomInjectionAnnotation2.class);
     }
   };
 
