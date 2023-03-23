@@ -13,8 +13,7 @@ import org.needle4k.junit5.NeedleExtension;
 
 /**
  * Example shows how to test Spring components in isolation.
- *
- * It also demonstrates that also constructor injection may be used.
+ * It also demonstrates how constructor injection may be used.
  */
 public class FooServiceTest
 {
@@ -40,9 +39,9 @@ public class FooServiceTest
 
     @Nullable
     @Override
-    public <T> T getInjectedObject(@NotNull final Class<T> injectionTargetType)
+    public Formatter getInjectedObject(@NotNull final Class<?> injectionTargetType)
     {
-      return (T) instance;
+      return instance;
     }
 
     @NotNull
