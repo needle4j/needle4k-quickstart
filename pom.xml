@@ -22,8 +22,6 @@
         <maven.compiler.target>11</maven.compiler.target>
 
         <org.springframework.version>5.3.25</org.springframework.version>
-        <kotlin.version>1.8.10</kotlin.version>
-        <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
 
         <slf4j.version>2.0.6</slf4j.version>
 
